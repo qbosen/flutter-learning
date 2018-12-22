@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/demo/english_words.dart';
+import 'package:flutter_app/demo/english_words.dart' show RandomWords;
+import 'package:flutter_app/widgets/navigator_widgets.dart' show WidgetsPage;
 
 void main() => runApp(new MyApp());
 
@@ -12,6 +13,7 @@ class MyApp extends StatelessWidget {
       theme: new ThemeData(primaryColor: Colors.white),
       routes: {
         'random_words': (context) => RandomWords(),
+        'widgets_page': (context) => WidgetsPage(),
       },
     );
   }
@@ -31,8 +33,8 @@ class MyHomePage extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.all(20),
         children: <Widget>[
-          NavigatorButton.create(context,
-              title: '单词列表', routeName: 'random_words'),
+          NavigatorButton.create(context, '单词列表', 'random_words'),
+          NavigatorButton.create(context, 'Widgets', 'widgets_page')
         ],
       ),
     );
@@ -40,8 +42,8 @@ class MyHomePage extends StatelessWidget {
 }
 
 class NavigatorButton {
-  static MaterialButton create(context,
-          {title, routeName, color = Colors.lightBlue}) =>
+  static MaterialButton create(context, title, routeName,
+          {color = Colors.lightBlue}) =>
       MaterialButton(
         child: Text(title),
         onPressed: () {
