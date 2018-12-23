@@ -19,6 +19,18 @@ class WidgetsPage extends StatelessWidget {
               buttonTitle: 'counter',
               barTitle: '计数器',
               bodyPage: CounterWidget()),
+          _createScaffoldNavigateButton(
+            context,
+            buttonTitle: 'TapBox',
+            barTitle: '状态管理',
+            bodyPage: ListView(
+              children: <Widget>[
+                TapBoxA(),
+                Divider(),
+                ParentWidget(),
+              ],
+            ),
+          ),
         ],
       ),
     );

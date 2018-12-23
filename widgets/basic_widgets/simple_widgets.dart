@@ -95,3 +95,95 @@ class _CounterWidgetState extends State<CounterWidget> {
     print("didChangeDependencies");
   }
 }
+
+/// 1. TapBoxA 自身状态管理
+class TapBoxA extends StatefulWidget {
+  @override
+  _TapBoxAState createState() => _TapBoxAState();
+}
+
+class _TapBoxAState extends State<TapBoxA> {
+  bool _active = false;
+
+  void _handleTap() {
+    setState(() {
+      _active = !_active;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: _handleTap,
+      child: Container(
+        child: Center(
+          child: Text(
+            _active ? 'Active' : 'Inavtive',
+            style: TextStyle(fontSize: 32, color: Colors.white),
+          ),
+        ),
+        width: 200,
+        height: 200,
+        decoration: BoxDecoration(
+            color: _active ? Colors.lightGreen[700] : Colors.grey[600]),
+      ),
+    );
+  }
+}
+
+/// 2. TapBoxB 父widget管理子widget状态
+class ParentWidget extends StatefulWidget {
+  @override
+  _ParentWidgetState createState() => _ParentWidgetState();
+}
+
+class _ParentWidgetState extends State<ParentWidget> {
+  bool _active = false;
+
+  void _handleTapBoxChanged(bool newValue) {
+    setState(() {
+      _active = newValue;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: TapBoxB(
+        active: _active,
+        onChanged: _handleTapBoxChanged,
+      ),
+    );
+  }
+}
+
+class TapBoxB extends StatelessWidget {
+  final bool active;
+  final ValueChanged<bool> onChanged;
+
+  void _handleTap() {
+    onChanged(!active);
+  }
+
+  TapBoxB({Key key, this.active: false, @required this.onChanged})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: _handleTap,
+      child: Container(
+        child: Center(
+          child: Text(
+            active ? 'Active' : 'Inactive',
+            style: TextStyle(fontSize: 32, color: Colors.white),
+          ),
+        ),
+        width: 200,
+        height: 200,
+        decoration: BoxDecoration(
+            color: active ? Colors.lightGreen[700] : Colors.grey[600]),
+      ),
+    );
+  }
+}
