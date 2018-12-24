@@ -157,6 +157,7 @@ class _ParentWidgetState extends State<ParentWidget> {
   }
 }
 
+//----------------------------------TapBoxB----------------------------------
 class TapBoxB extends StatelessWidget {
   final bool active;
   final ValueChanged<bool> onChanged;
@@ -183,6 +184,96 @@ class TapBoxB extends StatelessWidget {
         height: 200,
         decoration: BoxDecoration(
             color: active ? Colors.lightGreen[700] : Colors.grey[600]),
+      ),
+    );
+  }
+}
+
+/// 3. TapBoxC 混合管理。内外状态分别管理
+class ParentWidgetC extends StatefulWidget {
+  @override
+  _ParentWidgetCState createState() => _ParentWidgetCState();
+}
+
+class _ParentWidgetCState extends State<ParentWidgetC> {
+  bool _active = false;
+
+  void _handleBoxStateChanged(newState) {
+    setState(() {
+      _active = newState;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: TapBoxC(
+        active: _active,
+        onChanged: _handleBoxStateChanged,
+      ),
+    );
+  }
+}
+
+//----------------------------------TapBoxC----------------------------------
+class TapBoxC extends StatefulWidget {
+  final active;
+  final ValueChanged<bool> onChanged;
+
+  TapBoxC({Key key, this.active, this.onChanged}) : super(key: key);
+
+  @override
+  State createState() => _TapBoxCState();
+}
+
+class _TapBoxCState extends State<TapBoxC> {
+  bool _highlight = false;
+
+  void _handleTapDown(TapDownDetails details) {
+    setState(() {
+      _highlight = true;
+    });
+  }
+
+  void _handleTapUp(TapUpDetails details) {
+    setState(() {
+      _highlight = false;
+    });
+  }
+
+  void _handleTapCancel() {
+    setState(() {
+      _highlight = false;
+    });
+  }
+
+  void _handleTap() {
+    widget.onChanged(!widget.active);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // 按下时添加边框 抬起时取消
+    return GestureDetector(
+      onTapDown: _handleTapDown,
+      onTapUp: _handleTapUp,
+      onTapCancel: _handleTapCancel,
+      onTap: _handleTap,
+      child: Container(
+        child: Center(
+          child: Text(
+            widget.active ? 'Active' : 'Inactive',
+            style: TextStyle(fontSize: 32, color: Colors.white),
+          ),
+        ),
+        height: 200,
+        width: 200,
+        decoration: BoxDecoration(
+          color: widget.active ? Colors.lightGreen[700] : Colors.grey[600],
+          border: _highlight
+              ? Border.all(color: Colors.teal[700], width: 10)
+              : null,
+        ),
       ),
     );
   }

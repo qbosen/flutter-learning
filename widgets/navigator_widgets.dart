@@ -28,6 +28,8 @@ class WidgetsPage extends StatelessWidget {
                 TapBoxA(),
                 Divider(),
                 ParentWidget(),
+                Divider(),
+                ParentWidgetC(),
               ],
             ),
           ),
