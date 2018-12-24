@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/widgets/basic_widgets/simple_widgets.dart';
+import 'package:flutter_app/widgets/basic_widgets/text.dart';
 
 class WidgetsPage extends StatelessWidget {
   @override
@@ -31,6 +32,8 @@ class WidgetsPage extends StatelessWidget {
               ])),
           _createNavigateButton(context,
               title: 'iOS button', routePage: CupertinoTestRoute()),
+          _createNavigateButton(context,
+              title: '文本样式', routePage: TextWidget()),
         ],
       ),
     );
