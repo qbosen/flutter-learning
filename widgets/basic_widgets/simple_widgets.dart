@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 /// 显示由构造器传入的[text]内容 默认底色[backgroundColor]为[Colors.grey]
@@ -274,6 +275,24 @@ class _TapBoxCState extends State<TapBoxC> {
               ? Border.all(color: Colors.teal[700], width: 10)
               : null,
         ),
+      ),
+    );
+  }
+}
+
+/// 一个iOS风格的按钮 Cupertino
+class CupertinoTestRoute extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    return CupertinoPageScaffold(
+      navigationBar: CupertinoNavigationBar(
+        middle: Text('Cupertino Demo'),
+      ),
+      child: Center(
+        child: CupertinoButton(child: Text('Press'),
+          onPressed: (){},
+          color: CupertinoColors.activeBlue,),
       ),
     );
   }
