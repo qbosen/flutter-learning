@@ -26,6 +26,7 @@ class TextWidget extends StatelessWidget {
               style: TextStyle(
                   color: Colors.blue,
                   fontSize: 18.0,
+                  fontWeight: FontWeight.w700,
                   height: 1.2,
                   fontFamily: "Courier",
                   background: new Paint()..color = Colors.yellowAccent,
@@ -33,7 +34,39 @@ class TextWidget extends StatelessWidget {
                   decorationColor: Colors.greenAccent,
                   decorationStyle: TextDecorationStyle.dashed),
             ),
-
+            Text.rich(TextSpan(children: [
+              TextSpan(
+                  text: "Home: ",
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                      decoration: TextDecoration.none)),
+              TextSpan(
+                text: "https://flutterchina.club",
+                style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.blue,
+                    decoration: TextDecoration.none),
+              )
+            ])),
+            // 在某个节点设置文本样式，其子树的文本会默认使用该样式
+            DefaultTextStyle(
+              style: TextStyle(color: Colors.red, fontSize: 20),
+              textAlign: TextAlign.start,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text('Hello world'),
+                  Text('I am Jack Ma!'),
+                  Text(
+                    'I am Jack Ma!',
+                    style: TextStyle(inherit: false, color: Colors.grey),
+                  ),
+                ],
+              ),
+            ),
           ],
         ));
   }
